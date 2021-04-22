@@ -1,0 +1,77 @@
+plugins {
+//	id 'org.springframework.boot' version '2.2.6.RELEASE'
+//	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+//	id 'org.springframework.boot' version '2.4.4'
+//	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'maven-publish'
+}
+
+group = 'vmsa'
+version = '0.0.1-SNAPSHOT'
+description = 'keycloak'
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+	mavenLocal()
+	maven {
+		url = uri('https://repo.maven.apache.org/maven2/')
+	}
+	mavenCentral()
+}
+
+dependencies {
+//	implementation 'org.springframework.boot:spring-boot-starter-web:2.2.6.RELEASE'
+//	implementation 'org.springframework.boot:spring-boot-starter-actuator:2.2.6.RELEASE'
+//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.2.6.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.4.4'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator:2.4.4'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.4.4'
+	implementation 'org.jboss.resteasy:resteasy-jackson2-provider:3.12.1.Final'
+//	implementation 'org.keycloak:keycloak-dependencies-server-all:11.0.2'
+// https://mvnrepository.com/artifact/org.keycloak/keycloak-dependencies-server-all
+	implementation ('org.keycloak:keycloak-dependencies-server-all:11.0.2') {
+		exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+		exclude group: 'log4j', module: 'log4j'
+		exclude group: 'org.infinispan', module: 'infinispan-core'
+		exclude group: 'org.infinispan', module: 'infinispan-commons'
+		exclude group: 'org.infinispan', module: 'infinispan-jboss-marshalling'
+		exclude group: 'org.infinispan', module: 'infinispan-multimap'
+		exclude group: 'org.infinispan', module: 'infinispan-client-hotrod'
+		exclude group: 'org.infinispan', module: 'infinispan-cachestore-remote'
+		exclude group: 'org.yaml', module: 'snakeyaml'
+//        exclude group: 'org.infinispan', module: 'infinispan-core', version: '9.4.18.Final'
+//        exclude group: 'org.infinispan', module: 'infinispan-commons', version: '9.4.18.Final'
+//        exclude group: 'org.infinispan', module: 'infinispan-jboss-marshalling', version: '9.4.18.Final'
+//        exclude group: 'org.infinispan', module: 'infinispan-multimap', version: '10.1.8.Final'
+//        exclude group: 'org.infinispan', module: 'infinispan-client-hotrod', version: '10.1.8.Final'
+//        exclude group: 'org.infinispan', module: 'infinispan-cachestore-remote', version: '10.1.8.Final'
+	}
+	implementation 'org.infinispan:infinispan-core:10.1.8.Final'
+	testImplementation 'org.infinispan:infinispan-commons:10.1.8.Final'
+	implementation 'org.infinispan:infinispan-jboss-marshalling:10.1.8.Final'
+	implementation 'org.infinispan:infinispan-multimap:10.1.8.Final'
+	testImplementation 'org.infinispan:infinispan-client-hotrod:10.1.8.Final'
+	implementation 'org.infinispan:infinispan-cachestore-remote:10.1.8.Final'
+	implementation 'org.yaml:snakeyaml:1.25'
+
+//	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.2.6.RELEASE'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.4.4'
+	runtimeOnly 'com.h2database:h2:1.4.200'
+//	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.2.6.RELEASE'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.4.4'
+	testImplementation 'io.rest-assured:rest-assured:3.3.0'
+}
+
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			from(components.java)
+		}
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
